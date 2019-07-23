@@ -1,0 +1,125 @@
+﻿<Window x:Class="ADUSERSVS1.MainWindow"
+        x:Name="MainWindowApp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADUSERSVS1"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d"
+        Title="PS Admin" Height="1000" Width="1000" FontSize="10" BorderThickness="2" FontWeight="Bold">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- This is a comment block -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <Button x:Name="Button_Debug" Content="Debug" Margin="200,0,200,0" IsEnabled="True" Visibility="Visible" />
+            <TextBlock x:Name="TxtBlock_FindUser" Text="Find AD User" Padding="1" Margin="0,6,0,6"/>
+            <Grid x:Name="Grid_User" Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="TxtBlock_UserName" Text="User Name:" Grid.Row="0" Grid.Column="0" Margin="0,0,5,0" />
+                <TextBox x:Name="TxtBox_EnterName" Text="Enter User Name Here" Grid.Row="0" Grid.Column="1" FontWeight="Normal" Margin="2,0,0,2" />
+                <Button x:Name="Button_FindADUser" Content="Find AD User" Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" IsEnabled="True" />
+            </Grid>
+
+            <TextBlock x:Name="TxtBlock_Users" Text="Matching Users" Padding="1" Margin="0 1" />
+            <ListBox x:Name="ListBox_FoundUsers" Width="auto" Height="90" Margin="1 5" BorderThickness="1" Padding="1"  />
+
+            <Grid  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>                
+                <Button x:Name="Button_ADGroups" Content=" AD Groups of User"  Grid.Column="0" Grid.Row="0" Margin="5,2,5,2"/>
+                <Button x:Name="Button_EnableUnixAttributes" Content="Enable Unix Attributes"  Grid.Column="1" Grid.Row="0" Margin="5,2,5,2" IsEnabled="True" />
+                <Button x:Name="Button_ExtendedProperties" Content="Extended User Properties"  Grid.Column="2" Grid.Row="0" Margin ="5,2,5,2" />
+                
+                <Button x:Name="Button_GroupsWithGids" Content="Groups with GIDs"  Grid.Column="0" Grid.Row="1" Margin ="5,2,5,2" />
+                <Button x:Name="Button_SyncGroups" Content="Sync Groups" Margin="5,2,5,2" Grid.Column="2" Grid.Row="1" Padding="1"  />
+                <Button x:Name="Button_UIDList" Content="UID List"  Grid.Column="0" Grid.Row="2" Margin ="5,2,5,2" />
+                <Button x:Name="Button_ModifySelADUser" Content="Save Changes"  Grid.Column="1" Grid.Row="1" Margin="5,2,5,2" Visibility="Visible" IsEnabled="True"  />
+                <Button x:Name="Button_ResetForm" Content="Reset Form"  Grid.Column="2" Grid.Row="2" Margin="5,2,5,2"  />
+                
+                
+            </Grid>
+            <Border Padding="1" BorderThickness="1" >
+                <StackPanel Name="StackPanel1">
+                    <TextBlock x:Name="TxtBlock_SelectedUserHeader" Text="Selected User" />
+                    <TextBlock x:Name="TxtBlock_SelectedUser" Text="None"/>
+                    <TextBlock x:Name="TxtBlock_ResultHeader" Text="Operation Results"/>
+                    <TextBlock x:Name="TxtBlock_Result" Text="None" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="TxtBlock_MessageHeader" Text="Message"/>
+                    <TextBlock x:Name="TxtBlock_Message" Text="None"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel x:Name="StackPanel_UserView" Grid.Column="2" Grid.ColumnSpan ="2"  Grid.Row="0" Grid.RowSpan="2">
+            <DataGrid x:Name="DataGrid_UserAttributesLookup" Height="460" CanUserReorderColumns="true"  CanUserSortColumns="True" AutoGenerateColumns="False" IsEnabled="True" IsReadOnly="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Header="Attribute" Binding="{Binding Attribute}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn  Header="Current Value" Binding="{Binding CurrentValue}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn  Header="Set New Value" Binding="{Binding NewValue}" Width="*" IsReadOnly="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        
+        <StackPanel x:Name="StackPanel_GroupsAdd" Grid.Column="0" Grid.ColumnSpan ="2"  Grid.Row="2" Grid.RowSpan="2">
+            <DataGrid x:Name="DataGrid_GroupsAdd" Height="460" CanUserReorderColumns="true"  CanUserSortColumns="True" Visibility="Visible" AutoGenerateColumns="False"  >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="SamAccountName" Binding="{Binding SamAccountName}" Width=".75*"/>
+                    <DataGridTextColumn Header="GID" Binding="{Binding GID}" Width=".25*"/>
+                    <DataGridTextColumn Header="Unix Member" Binding="{Binding UnixMember}" Width=".40*"/>
+                    <DataGridTextColumn Header="Member" Binding="{Binding GroupMember}"  Width=".40*"/>
+                    <DataGridTextColumn Header="In Both" Binding="{Binding InBoth}"  Width=".25*"/>
+                    <DataGridTextColumn Header="Primary" Binding="{Binding Primary}"  Width=".25*"/>
+                    <DataGridTextColumn Header="Correct" Binding="{Binding Correct}"  Width=".25*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="DataGrid_GidView" Height="460" CanUserReorderColumns="true"  CanUserSortColumns="True" Visibility="Collapsed" AutoGenerateColumns="False"  >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="SamAccountName" Binding="{Binding SamAccountName}" Width="1*"/>
+                    <DataGridTextColumn Header="Unix ID" Binding="{Binding UserUnixID}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+        <StackPanel x:Name="StackPanel_GroupsLookup" Grid.Column="2" Grid.ColumnSpan ="2"  Grid.Row="2" Grid.RowSpan="2">
+            <DataGrid x:Name="DataGrid_GroupsLookup" Height="460" CanUserReorderColumns="true"  CanUserSortColumns="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Group Name" Binding="{Binding SamAccountname}" Width="2*"/>
+                    <DataGridTextColumn Header="Group ID" Binding="{Binding GID}" Width=".5*"/>
+                    <DataGridTextColumn  Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
